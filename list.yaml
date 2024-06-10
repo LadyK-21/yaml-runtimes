@@ -12,9 +12,9 @@ runtimes:
   runtime: haskell
   build-script: hs-build.sh
   lang: Haskell
-- &java
-  runtime: java
-  lang: Java
+#- &java
+#  runtime: java
+#  lang: Java
 - &lua
   runtime: lua
   build-script: lua-build.sh
@@ -30,21 +30,17 @@ runtimes:
   build-script: python-install.sh
   runtime: python
   lang: Python
-- &rakudo
-  build-script: rakudo-install.sh
-  build-dir:
-  - [var/build/rakudo/raku, /raku]  # [dir, mounted-as]
-  - [var/build/rakudo,      /build] # [dir, mounted-as]
-  runtime: rakudo
-  lang: Raku
+#- &rakudo
+#  build-script: rakudo-install.sh
+#  build-dir:
+#  - [var/build/rakudo/raku, /raku]  # [dir, mounted-as]
+#  - [var/build/rakudo,      /build] # [dir, mounted-as]
+#  runtime: rakudo
+#  lang: Raku
 - &ruby
   runtime: ruby
   lang: Ruby
   build-script: installgem.sh
-- &rust
-  runtime: static
-  lang: Rust
-  build-script: installrust.sh
 - &static
   runtime: static
 
@@ -95,8 +91,8 @@ libraries:
     name: yaml-cpp
     homepage: https://github.com/jbeder/yaml-cpp
     lang: C++
-    version: 0.7.0
-    source: https://github.com/jbeder/yaml-cpp/archive/yaml-cpp-0.7.0.tar.gz
+    version: 0.8.0
+    source: https://github.com/jbeder/yaml-cpp/archive/refs/tags/0.8.0.tar.gz
     build-script: cpp-yamlcpp-build.sh
     tests: [event]
 
@@ -124,23 +120,23 @@ libraries:
     version: master
     tests: [yeast]
 
-  java-snakeyaml:
-    <<: *java
-    name: SnakeYAML
-    homepage: https://bitbucket.org/snakeyaml/snakeyaml/
-    source: https://bitbucket.org/snakeyaml/snakeyaml/get/master.tar.gz
-    version: '1.31-SNAPSHOT'
-    build-script: java-snakeyaml-build.sh
-    tests: [event, json, yaml]
-
-  java-snakeengine:
-    <<: *java
-    name: SnakeYAML Engine
-    homepage: https://bitbucket.org/snakeyaml/snakeyaml-engine
-    source: https://bitbucket.org/snakeyaml/snakeyaml-engine/get/master.tar.gz
-    version: '2.4-SNAPSHOT'
-    build-script: java-snakeyaml-engine-build.sh
-    tests: [event, json, yaml]
+#  java-snakeyaml:
+#    <<: *java
+#    name: SnakeYAML
+#    homepage: https://bitbucket.org/snakeyaml/snakeyaml/
+#    source: https://bitbucket.org/snakeyaml/snakeyaml/get/master.tar.gz
+#    version: '1.31-SNAPSHOT'
+#    build-script: java-snakeyaml-build.sh
+#    tests: [event, json, yaml]
+#
+#  java-snakeengine:
+#    <<: *java
+#    name: SnakeYAML Engine
+#    homepage: https://bitbucket.org/snakeyaml/snakeyaml-engine
+#    source: https://bitbucket.org/snakeyaml/snakeyaml-engine/get/master.tar.gz
+#    version: '2.4-SNAPSHOT'
+#    build-script: java-snakeyaml-engine-build.sh
+#    tests: [event, json, yaml]
 
   js-jsyaml:
     <<: *node
@@ -155,8 +151,8 @@ libraries:
     <<: *node
     name: yaml
     homepage: https://github.com/eemeli/yaml
-    version: 2.0.0-10
-    source: https://github.com/eemeli/yaml/archive/refs/tags/v2.0.0-10.tar.gz
+    version: 2.4.5
+    source: https://github.com/eemeli/yaml/archive/refs/tags/v2.4.5.tar.gz
     build-script: js-yaml-build.sh
     tests: [event, json, yaml]
 
@@ -164,8 +160,8 @@ libraries:
     <<: *lua
     name: lyaml
     homepage: https://github.com/gvvaughan/lyaml
-    source: https://luarocks.org/manifests/gvvaughan/lyaml-6.2.7-1.src.rock
-    version: 6.2.7
+    source: https://luarocks.org/manifests/gvvaughan/lyaml-6.2.8-1.src.rock
+    version: 6.2.8
     tests: [json]
 
   nim-nimyaml:
@@ -183,8 +179,8 @@ libraries:
     <<: *perl
     name: YAML::PP
     homepage: https://metacpan.org/release/YAML-PP
-    version: '0.031'
-    source: https://cpan.metacpan.org/authors/id/T/TI/TINITA/YAML-PP-0.031.tar.gz
+    version: '0.38.0'
+    source: https://cpan.metacpan.org/authors/id/T/TI/TINITA/YAML-PP-v0.38.0.tar.gz
     tests: [event, json, yaml, perl]
 
   perl-refparser:
@@ -215,48 +211,48 @@ libraries:
     <<: *perl
     name: YAML::Tiny
     homepage: https://metacpan.org/release/YAML-Tiny
-    version: 1.73
-    source: https://cpan.metacpan.org/authors/id/E/ET/ETHER/YAML-Tiny-1.73.tar.gz
+    version: 1.74
+    source: https://cpan.metacpan.org/authors/id/E/ET/ETHER/YAML-Tiny-1.74.tar.gz
     tests: [json, perl]
 
   perl-xs:
     <<: *perl
     name: YAML::XS (libyaml)
     homepage: https://metacpan.org/release/YAML-LibYAML
-    version: '0.83'
-    source: https://cpan.metacpan.org/authors/id/T/TI/TINITA/YAML-LibYAML-0.83.tar.gz
+    version: '0.89'
+    source: https://cpan.metacpan.org/authors/id/T/TI/TINITA/YAML-LibYAML-0.89.tar.gz
     tests: [json, perl]
 
   perl-yaml:
     <<: *perl
     name: YAML.pm
     homepage: https://metacpan.org/release/YAML
-    version: '1.30'
-    source: https://cpan.metacpan.org/authors/id/T/TI/TINITA/YAML-1.30.tar.gz
+    version: '1.31'
+    source: https://cpan.metacpan.org/authors/id/I/IN/INGY/YAML-1.31.tar.gz
     tests: [json, perl]
 
-  raku-yamlish:
-    <<: *rakudo
-    name: YAMLish
-    homepage: https://github.com/Leont/yamlish
-    version: 0.0.6
-    source: https://github.com/Leont/yamlish/archive/master.zip
-    tests: [json, raku]
+#  raku-yamlish:
+#    <<: *rakudo
+#    name: YAMLish
+#    homepage: https://github.com/Leont/yamlish
+#    version: 0.0.6
+#    source: https://github.com/Leont/yamlish/archive/master.zip
+#    tests: [json, raku]
 
   py-pyyaml:
     <<: *python
     name: PyYAML
     homepage: https://github.com/yaml/pyyaml
-    version: '6.0'
-    source: https://files.pythonhosted.org/packages/36/2b/61d51a2c4f25ef062ae3f74576b01638bebad5e045f747ff12643df63844/PyYAML-6.0.tar.gz
+    version: '5.3.1'
+    source: https://files.pythonhosted.org/packages/64/c2/b80047c7ac2478f9501676c988a5411ed5572f35d1beff9cae07d321512c/PyYAML-5.3.1.tar.gz
     tests: [event, json, py, yaml]
 
   py-ruamel:
     <<: *python
     homepage: https://bitbucket.org/ruamel/yaml
     name: ruamel.yaml
-    version: 0.17.20
-    source: https://files.pythonhosted.org/packages/2d/b1/b672cbe8be9ea09d85d2be8c3693811362295aa8483849e85b41caaadb85/ruamel.yaml-0.17.20.tar.gz
+    version: 0.18.6
+    source: https://files.pythonhosted.org/packages/29/81/4dfc17eb6ebb1aac314a3eb863c1325b907863a1b8b1382cdffcb6ac0ed9/ruamel.yaml-0.18.6.tar.gz
     tests: [event, json, py, yaml]
 
   ruby-psych:
@@ -268,7 +264,9 @@ libraries:
     tests: [json]
 
   rust-yamlrust:
-    <<: *rust
+    <<: *static
+    lang: Rust
+    build-script: installrust.sh
     name: yaml
     homepage: https://github.com/chyh1990/yaml-rust
     version: 0.4.4
@@ -282,4 +280,4 @@ formats:
   yeast: YEAST Events
   perl: Perl Native
   py: Python Native
-  raku: Raku Native
+#  raku: Raku Native
